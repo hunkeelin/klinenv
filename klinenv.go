@@ -43,25 +43,33 @@ func NewAppConfig(filename string) AppConfig {
         chunks := strings.Split(line, "=")
 
         if len(chunks) != 2 {
-            isfirstquote := string(chunks[1][0])
-            islastquote := string(line[len(line)-1])
-            if isfirstquote == "\"" && islastquote == "\"" {
-                config.data[chunks[0]] = line[len(chunks[0])+1:]
-                continue
-            }
+    //        isfirstquote := string(chunks[1][0])
+    //        islastquote := string(line[len(line)-1])
+    //        if isfirstquote == "\"" && islastquote == "\"" {
+            final := line[len(chunks[0])+1:]
+            config.data[chunks[0]] = strings.Trim(final,"\"")
+            continue
+    //        }
             log.Fatal("config error at ",chunks[0])
         } else {
-            config.data[chunks[0]] = chunks[1]
+       //     isfirstquote := string(chunks[1][0])
+       //     islastquote := string(line[len(line)-1])
+       //     if isfirstquote == "\"" && islastquote == "\"" {
+       //         final := line[len(chunks[0])+1:]
+       //         config.data[chunks[0]] = final[1:len(final)-1]
+       //         continue
+       //     }
+            config.data[chunks[0]] = strings.Trim(chunks[1],"\"")
         }
     }
     return config
 }
 //func main() {
 //    config := NewAppConfig("configfile.txt")
-//    x, err := config.Get("keyname")
+//    x, err := config.Get("workdir")
 //    if err != nil {
-//        panic(err)
-//    }
+//       panic(err)
+//   }
 //    fmt.Println(x)
 //}
 
