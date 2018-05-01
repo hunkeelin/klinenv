@@ -2,7 +2,6 @@ package mmurphyenv
 
 import (
     "bufio"
-    "fmt"
     "os"
     "strings"
 )
