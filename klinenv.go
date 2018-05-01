@@ -1,4 +1,4 @@
-package klin
+package klinenv
 
 import (
     "bufio"
