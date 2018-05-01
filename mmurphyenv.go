@@ -43,9 +43,3 @@ func NewAppConfig(filename string) AppConfig {
     }
     return config
 }
-
-func main() {
-    config := NewAppConfig("configfile.txt")
-    fmt.Println(config.Get("keyname"))
-    fmt.Println(config.Get("otherkey"))
-}
