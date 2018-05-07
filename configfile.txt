@@ -1,3 +1,0 @@
-workdir="/home/klin/r9000k/git_folder/=;laksdf
-testconfig="blablabla"
-concur=3
