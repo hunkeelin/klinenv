@@ -26,12 +26,12 @@ func (ac AppConfig) Get(key string) (string, error) {
 func NewAppConfig(filename string) AppConfig {
     fin, err := os.Open(filename)
     if err != nil {
-        panic("error opening config file: " + err.Error())
+        log.Fatal(err)
     }
     defer func() {
         cerr := fin.Close()
         if cerr != nil {
-            panic("error closing config file: " + cerr.Error())
+            log.Fatal(cerr)
         }
     }()
     scanner := bufio.NewScanner(fin)
