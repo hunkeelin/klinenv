@@ -43,6 +43,9 @@ func NewAppConfig(filename string) AppConfig {
 		if len(line) == 0 {
 			continue
 		}
+		if strings.HasPrefix(line, "//") {
+			continue
+		}
 		chunks := strings.Split(line, "=")
 		if len(chunks) != 2 {
 			final := line[len(chunks[0])+1:]
