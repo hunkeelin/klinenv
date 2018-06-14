@@ -40,7 +40,7 @@ func NewAppConfig(filename string) AppConfig {
 	config.data = make(map[string]string, 0)
 	for scanner.Scan() {
 		line := scanner.Text()
-		if line == "\n" {
+		if len(line) == 0 {
 			continue
 		}
 		chunks := strings.Split(line, "=")
@@ -48,7 +48,6 @@ func NewAppConfig(filename string) AppConfig {
 			final := line[len(chunks[0])+1:]
 			config.data[chunks[0]] = strings.Trim(final, "\"")
 			continue
-			log.Fatal("config error at ", chunks[0])
 		} else {
 			config.data[chunks[0]] = strings.Trim(chunks[1], "\"")
 		}
