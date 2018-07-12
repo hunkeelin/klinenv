@@ -2,6 +2,7 @@ package klinenv
 
 import (
 	"bufio"
+	"errors"
 	"fmt"
 	"log"
 	"os"
@@ -56,4 +57,33 @@ func NewAppConfig(filename string) AppConfig {
 		}
 	}
 	return config
+}
+func NewAppConfigv2(filename string) (AppConfig, error) {
+	config := AppConfig{}
+	fin, err := os.Open(filename)
+	if err != nil {
+		return config, errors.New("Unable to open config file")
+	}
+	defer fin.Close()
+	scanner := bufio.NewScanner(fin)
+	scanner.Split(bufio.ScanLines)
+	config.data = make(map[string]string, 0)
+	for scanner.Scan() {
+		line := scanner.Text()
+		if len(line) == 0 {
+			continue
+		}
+		if strings.HasPrefix(line, "//") {
+			continue
+		}
+		chunks := strings.Split(line, "=")
+		if len(chunks) != 2 {
+			final := line[len(chunks[0])+1:]
+			config.data[chunks[0]] = strings.Trim(final, "\"")
+			continue
+		} else {
+			config.data[chunks[0]] = strings.Trim(chunks[1], "\"")
+		}
+	}
+	return config, nil
 }
