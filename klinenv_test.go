@@ -9,7 +9,7 @@ func TestConfig(t *testing.T) {
 	fmt.Println("testing")
 	config := NewAppConfig("testconfig")
 	fmt.Println(config.Get("port"))
-	configv2, err := NewAppConfigv2("testconfig")
-	fmt.Println(configv2.Get("port"))
+	configv2, err := NewAppConfigv2("testconfig", "=")
+	fmt.Println(configv2.Getv2("port"))
 	fmt.Println(err)
 }

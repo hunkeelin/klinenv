@@ -24,6 +24,13 @@ func (ac AppConfig) Get(key string) (string, error) {
 	}
 	return value, nil
 }
+func (ac AppConfig) Getv2(key string) string {
+	value, ok := ac.data[key]
+	if !ok {
+		return ""
+	}
+	return value
+}
 func NewAppConfig(filename string) AppConfig {
 	fin, err := os.Open(filename)
 	if err != nil {
@@ -58,7 +65,9 @@ func NewAppConfig(filename string) AppConfig {
 	}
 	return config
 }
-func NewAppConfigv2(filename string) (AppConfig, error) {
+
+// read klin_test.go to understand what's going on.
+func NewAppConfigv2(filename, delim string) (AppConfig, error) {
 	config := AppConfig{}
 	fin, err := os.Open(filename)
 	if err != nil {
@@ -76,7 +85,7 @@ func NewAppConfigv2(filename string) (AppConfig, error) {
 		if strings.HasPrefix(line, "//") {
 			continue
 		}
-		chunks := strings.Split(line, "=")
+		chunks := strings.Split(line, delim)
 		if len(chunks) != 2 {
 			final := line[len(chunks[0])+1:]
 			config.data[chunks[0]] = strings.Trim(final, "\"")
